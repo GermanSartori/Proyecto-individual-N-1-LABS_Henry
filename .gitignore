@@ -1,0 +1,6 @@
+# Ignorar archivos específicos en la carpeta transformaciones_y_pruebas
+datos/transformaciones_y_pruebas/path_to_merged_data.csv
+
+# Ignorar archivos en la carpeta originales
+datos/originales/credits.csv
+datos/originales/movies_dataset.csv
