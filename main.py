@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
 
 
-
+# Carga de datasets
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 movies_path = os.path.join(current_dir, "datos_procesados", "movies_df.csv")

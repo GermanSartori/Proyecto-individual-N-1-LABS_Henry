@@ -2,12 +2,18 @@ import locale
 import pandas as pd
 import ast
 from fastapi import FastAPI, HTTPException
+import os
 
 app = FastAPI()
 
 # Carga de datasets
-df_movies_limpio = pd.read_csv(r"E:\Repositorios y bases de datos\Henry DS\Proyecto-individual-N-1---LABS---Henry\datos_procesados\movies_df.csv")
-director_actor_df = pd.read_csv(r"E:\Repositorios y bases de datos\Henry DS\Proyecto-individual-N-1---LABS---Henry\datos_procesados\director_actor_df.csv", index_col=0)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+movies_path = os.path.join(current_dir, "datos_procesados", "movies_df.csv")
+director_actor_path = os.path.join(current_dir, "datos_procesados", "director_actor_df.csv")
+
+df_movies_limpio = pd.read_csv(movies_path)
+director_actor_df = pd.read_csv(director_actor_path, index_col=0)
+
 
 # Convertir la columna 'actor' de string a lista
 director_actor_df['actor'] = director_actor_df['actor'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
