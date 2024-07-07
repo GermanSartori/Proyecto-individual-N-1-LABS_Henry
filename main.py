@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import pandas as pd
-from modulos_endpoints import cantidad_filmaciones_mes, cantidad_filmaciones_dia, score_titulo, votos_titulo, get_actor, get_director
+from modulos import cantidad_filmaciones_mes, cantidad_filmaciones_dia, score_titulo, votos_titulo, get_actor, get_director
 
 app = FastAPI()
 
