@@ -34,6 +34,8 @@ except locale.Error:
 def normalize_string(s):
     return ''.join(c.lower() for c in s if c.isalnum())
 
+
+#================================================================================================
 # Endpoint cantidad_filmaciones_mes
 @app.get("/cantidad_filmaciones_mes/{mes}")
 def cantidad_filmaciones_mes(mes: str):
@@ -46,18 +48,42 @@ def cantidad_filmaciones_mes(mes: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+#================================================================================================
 # Endpoint cantidad_filmaciones_dia
+
+#====================================== # Diccionario para mapear números a nombres de días
+numeros_a_dias = {
+    0: 'lunes',
+    1: 'martes',
+    2: 'miércoles',
+    3: 'jueves',
+    4: 'viernes',
+    5: 'sábado',
+    6: 'domingo'
+}
+
 @app.get("/cantidad_filmaciones_dia/{dia}")
 def cantidad_filmaciones_dia(dia: int):
     try:
-        # Filtrar películas por el día especificado
-        filtered_movies = df_movies_limpio[df_movies_limpio['release_date'].dt.day == dia]
+        if dia < 1 or dia > 7:
+            raise ValueError(f"Número de día inválido: {dia}")
+
+        # Convertir el número de día a día de la semana (0 para lunes, 6 para domingo)
+        dia_semana = (dia - 1) % 7
+
+        # Filtrar películas por el día de la semana especificado
+        filtered_movies = df_movies_limpio[df_movies_limpio['release_date'].dt.dayofweek == dia_semana]
         # Contar la cantidad de películas filtradas
         cantidad = filtered_movies.shape[0]
-        return {"cantidad": cantidad}
+        # Obtener el nombre del día de la semana
+        nombre_dia = numeros_a_dias[dia_semana]
+        
+        return {"día": nombre_dia, "cantidad": cantidad}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+#================================================================================================
 # Endpoint score_titulo
 @app.get("/score_titulo/{titulo}")
 def score_titulo(titulo: str):
@@ -75,6 +101,8 @@ def score_titulo(titulo: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+#================================================================================================
 # Endpoint votos_titulo
 @app.get("/votos_titulo/{titulo}")
 def votos_titulo(titulo: str):
@@ -94,6 +122,8 @@ def votos_titulo(titulo: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+#================================================================================================
 # Endpoint get_actor
 @app.get("/get_actor/{actor_name}")
 def get_actor(actor_name: str):
@@ -119,6 +149,8 @@ def get_actor(actor_name: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+#================================================================================================
 # Endpoint get_director
 @app.get("/get_director/{director_name}")
 def get_director(director_name: str):
