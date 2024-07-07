@@ -16,7 +16,7 @@ if __name__ == "__main__":
 
 
 # Carga de datasets
-df_movies_limpio = pd.read_csv(r"datos_procesados/movies_df.csv")
+df_movies_limpio = pd.read_csv("datos_procesados/movies_df.csv")
 director_actor_df = pd.read_csv("datos_procesados/director_actor_df.csv", index_col=0)
 
 # Endpoint cantidad_filmaciones_mes
