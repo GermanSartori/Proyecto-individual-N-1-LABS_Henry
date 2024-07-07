@@ -53,33 +53,36 @@ def cantidad_filmaciones_mes(mes: str):
 # Endpoint cantidad_filmaciones_dia
 
 #====================================== # Diccionario para mapear números a nombres de días
-numeros_a_dias = {
-    0: 'lunes',
-    1: 'martes',
-    2: 'miércoles',
-    3: 'jueves',
-    4: 'viernes',
-    5: 'sábado',
-    6: 'domingo'
+# Diccionario para mapear nombres de días a números
+dias_a_numeros = {
+    'lunes': 0,
+    'martes': 1,
+    'miércoles': 2,
+    'jueves': 3,
+    'viernes': 4,
+    'sábado': 5,
+    'domingo': 6
 }
 
 @app.get("/cantidad_filmaciones_dia/{dia}")
-def cantidad_filmaciones_dia(dia: int):
+def cantidad_filmaciones_dia(dia: str):
     try:
-        if dia < 1 or dia > 7:
-            raise ValueError(f"Número de día inválido: {dia}")
+        # Convertir el nombre del día a minúsculas para evitar problemas de capitalización
+        dia = dia.lower()
 
-        # Convertir el número de día a día de la semana (0 para lunes, 6 para domingo)
-        dia_semana = (dia - 1) % 7
+        # Verificar si el nombre del día es válido
+        if dia not in dias_a_numeros:
+            raise ValueError(f"Nombre de día inválido: {dia}")
+
+        # Obtener el número correspondiente al día
+        dia_semana = dias_a_numeros[dia]
 
         # Filtrar películas por el día de la semana especificado
         filtered_movies = df_movies_limpio[df_movies_limpio['release_date'].dt.dayofweek == dia_semana]
         # Contar la cantidad de películas filtradas
         cantidad = filtered_movies.shape[0]
-        # Obtener el nombre del día de la semana
-        nombre_dia = numeros_a_dias[dia_semana]
         
-        return {"día": nombre_dia, "cantidad": cantidad}
+        return {"día": dia, "cantidad": cantidad}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -173,3 +176,4 @@ def get_director(director_name: str):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
