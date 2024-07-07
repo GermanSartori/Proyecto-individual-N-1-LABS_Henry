@@ -3,17 +3,17 @@ import pandas as pd
 
 app = FastAPI()
 
-# Cargar los archivos Parquet en DataFrames
-merged_df = pd.read_parquet(r'E:\Repositorios y bases de datos\Henry DS\Proyecto final 1 - LABS\archivos VSC\merged_df.parquet')
-movies_df = pd.read_parquet(r'E:\Repositorios y bases de datos\Henry DS\Proyecto final 1 - LABS\datos\movies_dataset.parquet')
+#Carga de datasets
+df_movies_limpio = pd.read_csv(r"E:\Repositorios y bases de datos\Henry DS\Proyecto-individual-N-1---LABS---Henry\datos_procesados\movies_df.csv")
+director_actor_df = pd.read_csv(r"E:\Repositorios y bases de datos\Henry DS\Proyecto-individual-N-1---LABS---Henry\datos_procesados\director_actor_df.csv", index_col=0)
 
 @app.get("/cantidad_filmaciones_mes/{mes}")
 def cantidad_filmaciones_mes(mes: str):
     try:
         mes = mes.capitalize()
-        movies_df['release_date'] = pd.to_datetime(movies_df['release_date'])
-        movies_df['mes'] = movies_df['release_date'].dt.strftime('%B')
-        count = movies_df[movies_df['mes'] == mes].shape[0]
+        df_movies_limpio['release_date'] = pd.to_datetime(df_movies_limpio['release_date'])
+        df_movies_limpio['mes'] = df_movies_limpio['release_date'].dt.strftime('%B')
+        count = df_movies_limpio[df_movies_limpio['mes'] == mes].shape[0]
         return {"mes": mes, "cantidad": count}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -22,9 +22,9 @@ def cantidad_filmaciones_mes(mes: str):
 def peliculas_dia(dia: str):
     try:
         dia = dia.capitalize()
-        movies_df['release_date'] = pd.to_datetime(movies_df['release_date'])
-        movies_df['dia'] = movies_df['release_date'].dt.strftime('%A')
-        count = movies_df[movies_df['dia'] == dia].shape[0]
+        df_movies_limpio['release_date'] = pd.to_datetime(df_movies_limpio['release_date'])
+        df_movies_limpio['dia'] = df_movies_limpio['release_date'].dt.strftime('%A')
+        count = df_movies_limpio[df_movies_limpio['dia'] == dia].shape[0]
         return {"dia": dia, "cantidad": count}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -32,7 +32,7 @@ def peliculas_dia(dia: str):
 @app.get("/score_titulo/{titulo}")
 def score_titulo(titulo: str):
     try:
-        pelicula = movies_df[movies_df['title'] == titulo].iloc[0]
+        pelicula = df_movies_limpio[df_movies_limpio['title'] == titulo].iloc[0]
         return {
             "titulo": titulo,
             "fecha_lanzamiento": pelicula['release_date'],
@@ -46,7 +46,7 @@ def score_titulo(titulo: str):
 @app.get("/votos_titulo/{titulo}")
 def votos_titulo(titulo: str):
     try:
-        pelicula = movies_df[movies_df['title'] == titulo].iloc[0]
+        pelicula = df_movies_limpio[df_movies_limpio['title'] == titulo].iloc[0]
         if pelicula['vote_count'] < 2000:
             return {"titulo": titulo, "mensaje": "La película no cumple con el criterio de más de 2000 votos"}
         return {
@@ -63,7 +63,7 @@ def votos_titulo(titulo: str):
 @app.get("/get_actor/{actor_name}")
 def get_actor(actor_name: str):
     try:
-        actor_movies = merged_df[(merged_df['actor'] == actor_name) & (merged_df['director'] != actor_name)]
+        actor_movies = director_actor_df[(director_actor_df['actor'] == actor_name) & (director_actor_df['director'] != actor_name)]
         if actor_movies.empty:
             raise HTTPException(status_code=404, detail="Actor no encontrado o también es director")
 
@@ -83,7 +83,7 @@ def get_actor(actor_name: str):
 @app.get("/get_director/{director_name}")
 def get_director(director_name: str):
     try:
-        director_movies = merged_df[merged_df['director'] == director_name]
+        director_movies = director_actor_df[director_actor_df['director'] == director_name]
         if director_movies.empty:
             raise HTTPException(status_code=404, detail="Director no encontrado")
 
