@@ -83,8 +83,12 @@ def votos_titulo(titulo):
 
 
 # Endpoint get_actor
+def normalize_string(s):
+    return ''.join(c.lower() for c in s if c.isalnum())
+
 @app.get("/get_actor/{actor_name}")
 def get_actor(actor_name):
+    
     # Filtrar el DataFrame por nombre del actor
     actor_movies = director_actor_df[director_actor_df['actor'].apply(lambda lista_actores: any(actor_name.lower() in normalize_string(actor).lower() for actor in lista_actores))]
     
@@ -134,7 +138,3 @@ def get_director(director_name):
         "peliculas": director_movies_details.to_dict(orient="records")
     }
 
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)

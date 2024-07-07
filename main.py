@@ -1,12 +1,19 @@
 from fastapi import FastAPI, HTTPException
 import pandas as pd
 from modulos import cantidad_filmaciones_mes, cantidad_filmaciones_dia, score_titulo, votos_titulo, get_actor, get_director
+import os
+import uvicorn
+
 
 app = FastAPI()
 
 @app.get("/")
 def read_root():
     return {"message": "La API está en funcionamiento!"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+
 
 # Carga de datasets
 df_movies_limpio = pd.read_csv(r"datos_procesados/movies_df.csv")
@@ -30,7 +37,6 @@ app.get("/get_actor/{actor_name}")(get_actor)
 # Endpoint get_director
 app.get("/get_director/{director_name}")(get_director)
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
 
