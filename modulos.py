@@ -116,7 +116,8 @@ def votos_titulo(titulo: str):
         if not filtered_movie.empty:
             cantidad_votos = filtered_movie.iloc[0]['vote_count']
             promedio_votos = filtered_movie.iloc[0]['vote_average']
-            if pd.notnull(cantidad_votos) and int(cantidad_votos) >= 2000:
+            # Convertir cantidad_votos a float y luego comparar con 2000
+            if pd.notnull(cantidad_votos) and float(cantidad_votos) >= 2000:
                 return {"titulo": titulo, "cantidad_votos": cantidad_votos, "promedio_votos": promedio_votos}
             else:
                 raise HTTPException(status_code=404, detail=f"La película {titulo} no cumple con la condición de tener al menos 2000 valoraciones.")
