@@ -150,11 +150,12 @@ def votos_titulo(titulo: str):
 
 #================================================================================================
 # Endpoint get_actor
+
 @app.get("/get_actor/{actor_name}")
 def get_actor(actor_name: str):
     try:
         # Filtrar el DataFrame por nombre del actor
-        actor_movies = director_actor_df[director_actor_df['actor'].apply(lambda lista_actores: any(actor_name.lower() in normalize_string(actor).lower() for actor in lista_actores))]
+        actor_movies = director_actor_df[director_actor_df['actor'].apply(lambda lista_actores: any(actor_name.lower() in [normalize_string(actor).lower() for actor in lista_actores]))]
         
         if actor_movies.empty:
             raise HTTPException(status_code=404, detail=f"El actor {actor_name} no ha participado de ninguna filmación.")
@@ -185,6 +186,7 @@ def get_actor(actor_name: str):
         error_message = f"Error en get_actor para el actor {actor_name}: {str(e)}"
         print(error_message)  # Imprimir el error en la consola para depuración
         raise HTTPException(status_code=500, detail="Ocurrió un error interno al procesar la solicitud.")
+
 
 
 
