@@ -155,24 +155,37 @@ def get_actor(actor_name: str):
     try:
         # Filtrar el DataFrame por nombre del actor
         actor_movies = director_actor_df[director_actor_df['actor'].apply(lambda lista_actores: any(actor_name.lower() in normalize_string(actor).lower() for actor in lista_actores))]
+        
         if actor_movies.empty:
             raise HTTPException(status_code=404, detail=f"El actor {actor_name} no ha participado de ninguna filmación.")
         
-        cantidad_filmaciones = actor_movies.shape[0]
         # Merge con df_movies_limpio para obtener los detalles de las películas
         actor_movies_details = pd.merge(actor_movies, df_movies_limpio, on='movie_id', how='inner')
+        
+        cantidad_filmaciones = actor_movies_details.shape[0]
+        
         # Calcular retorno total y promedio en dólares
         actor_movies_details['return_dollars'] = actor_movies_details['return'] * actor_movies_details['budget']
         retorno_total_dollars = actor_movies_details['return_dollars'].sum()
         retorno_promedio_dollars = actor_movies_details['return_dollars'].mean()
+        
         return {
             "actor": actor_name,
             "cantidad_filmaciones": cantidad_filmaciones,
             "retorno_total_dollars": retorno_total_dollars,
             "retorno_promedio_dollars": retorno_promedio_dollars
         }
+    
+    except HTTPException as he:
+        # Capturar las excepciones HTTPException y relanzarlas
+        raise he
+    
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # Capturar cualquier otra excepción y devolver un error 500 con el detalle del error
+        error_message = f"Error en get_actor para el actor {actor_name}: {str(e)}"
+        print(error_message)  # Imprimir el error en la consola para depuración
+        raise HTTPException(status_code=500, detail="Ocurrió un error interno al procesar la solicitud.")
+
 
 
 #================================================================================================
