@@ -106,6 +106,11 @@ def score_titulo(titulo: str):
 
 
 #================================================================================================
+from fastapi import FastAPI, HTTPException
+import pandas as pd
+
+# Supongamos que `df_movies_limpio` es tu DataFrame de películas
+
 # Endpoint votos_titulo
 @app.get("/votos_titulo/{titulo}")
 def votos_titulo(titulo: str):
@@ -114,25 +119,34 @@ def votos_titulo(titulo: str):
         filtered_movie = df_movies_limpio[df_movies_limpio['title'].str.lower() == titulo.lower()]
         
         # Verificar si se encontró la película
-        if not filtered_movie.empty:
-            cantidad_votos = filtered_movie.iloc[0]['vote_count']
-            promedio_votos = filtered_movie.iloc[0]['vote_average']
-            
-            # Verificar si cantidad_votos no es NaN y es mayor o igual a 2000
-            if pd.notnull(cantidad_votos) and (cantidad_votos >= 2000):
-                return {"titulo": titulo, "cantidad_votos": cantidad_votos, "promedio_votos": promedio_votos}
-            else:
-                # Levantar una excepción 404 si no cumple la condición
-                raise HTTPException(status_code=404, detail=f"La película {titulo} no cumple con la condición de tener al menos 2000 valoraciones.")
-        else:
-            # Levantar una excepción 404 si no se encontró la película
+        if filtered_movie.empty:
             raise HTTPException(status_code=404, detail=f"No se encontró la película con título {titulo} en el dataset")
+        
+        # Obtener el primer resultado (debería ser único, pero por si acaso)
+        movie_data = filtered_movie.iloc[0]
+        
+        # Convertir vote_count a un número entero
+        try:
+            cantidad_votos = int(movie_data['vote_count'])
+        except ValueError:
+            raise HTTPException(status_code=500, detail="Error al convertir vote_count a entero")
+        
+        # Obtener promedio de votos
+        promedio_votos = movie_data['vote_average']
+        
+        # Verificar si cantidad_votos es mayor o igual a 2000
+        if cantidad_votos >= 2000:
+            return {"titulo": titulo, "cantidad_votos": cantidad_votos, "promedio_votos": promedio_votos}
+        else:
+            raise HTTPException(status_code=404, detail=f"La película {titulo} no cumple con la condición de tener al menos 2000 valoraciones.")
+        
     except HTTPException as he:
         # Capturar las excepciones HTTPException y relanzarlas
         raise he
     except Exception as e:
         # Capturar cualquier otra excepción y devolver un error 500
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
 
