@@ -191,7 +191,6 @@ def get_actor(actor_name: str):
 
 
 #================================================================================================
-# Endpoint get_director
 @app.get("/get_director/{director_name}")
 def get_director(director_name: str):
     try:
@@ -199,18 +198,27 @@ def get_director(director_name: str):
         director_movies = director_actor_df[director_actor_df['director'].apply(lambda director: director_name.lower() in normalize_string(director).lower())]
         if director_movies.empty:
             raise HTTPException(status_code=404, detail=f"No se encontraron películas para el director {director_name}")
+        
         # Obtener los movie_id de las películas dirigidas por el director
         movie_ids = director_movies['movie_id'].unique()
+        
         # Filtrar df_movies_limpio por los movie_id obtenidos
         director_movies_details = df_movies_limpio[df_movies_limpio['movie_id'].isin(movie_ids)]
+        
         # Calcular el retorno promedio en dólares de todas las películas del director
         director_movies_details['return_dollars'] = director_movies_details['return'] * director_movies_details['budget']
         avg_return_dollars = director_movies_details['return_dollars'].mean()
+        
         return {
             "director": director_name,
             "avg_return_dollars": avg_return_dollars,
             "peliculas": director_movies_details.to_dict(orient="records")
         }
+    
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=f"No se encontraron datos clave: {str(e)}")
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
