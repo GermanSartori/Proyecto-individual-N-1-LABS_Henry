@@ -112,6 +112,7 @@ def votos_titulo(titulo: str):
     try:
         # Filtrar película por título
         filtered_movie = df_movies_limpio[df_movies_limpio['title'].str.lower() == titulo.lower()]
+        
         # Verificar si se encontró la película
         if not filtered_movie.empty:
             cantidad_votos = filtered_movie.iloc[0]['vote_count']
@@ -126,9 +127,13 @@ def votos_titulo(titulo: str):
         else:
             # Levantar una excepción 404 si no se encontró la película
             raise HTTPException(status_code=404, detail=f"No se encontró la película con título {titulo} en el dataset")
+    except HTTPException as he:
+        # Capturar las excepciones HTTPException y relanzarlas
+        raise he
     except Exception as e:
         # Capturar cualquier otra excepción y devolver un error 500
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
 
