@@ -1,6 +1,3 @@
-# Proyecto-individual-N-1---LABS---Henry
-
-
 Documentación para el "Proyecto de Recomendación de Películas"
 
 Un Viaje por el Análisis de Datos y la Recomendación Personalizada
@@ -8,24 +5,22 @@ Un Viaje por el Análisis de Datos y la Recomendación Personalizada
 
 El trabajo incluye:
 
-Análisis de grandes conjuntos de datos de películas.
-Identificación de patrones en géneros, directores y actores.
-Desarrollo de algoritmos para predecir preferencias de usuarios.
+Análisis de conjuntos de datos de películas.
+Identificación de patrones en géneros, directores y actores principalmente.
 Creación de un sistema de recomendación basado en estos análisis.
 
 
-Utilizamos herramientas de aprendizaje automático y estadística para procesar y interpretar los datos. El resultado final es un sistema capaz de sugerir películas a usuarios basándose en sus gustos previos y en las características de las películas.
+El resultado final es un sistema capaz de sugerir películas a usuarios basándose en sus gustos previos y en las características de las películas.
 Este proyecto busca mejorar la experiencia de los espectadores al ayudarles a descubrir películas que probablemente disfruten, basándose en un análisis objetivo de datos y tendencias cinematográficas.
 
 
 
-Tecnologías utilizadas: Nombra las herramientas y lenguajes de programación específicos, como Python, Pandas, scikit-learn, FastAPI, etc.
+Tecnologías utilizadas: Python, Github, FastApi, Render. Además librerías commo Pandas, Unvicorn, Matplotlib, Scikit-learn, entre otras.
 
 
-Aplicaciones prácticas: Menciona cómo este sistema podría ser utilizado en plataformas de streaming o sitios web de reseñas de películas.
-
-Visualizaciones: Si has creado gráficos o visualizaciones interesantes durante tu análisis, podrías mencionarlos.
-
+Aplicaciones prácticas: 
+Identificación de patrones: Detecta patrones en las preferencias de los usuarios, como las películas que han visto, calificado o buscado, para comprender sus gustos y tendencias cinematográficas.
+Acceso a través de una API: Proporciona una interfaz de programación de aplicaciones (API) que permite a otras aplicaciones o servicios acceder a las funcionalidades de recomendación de películas. Esto permite integrar tu sistema en otras plataformas, como sitios web de streaming o aplicaciones móviles.
 
 
 EJECUCIÓN:
@@ -41,7 +36,6 @@ cd <dirección del proyecto>
 
 DEPENDENCIAS:
 Instala las dependencias necesarias:
-pip install -r requirements.txt. Las que se incluyen son:
 fastapi==0.73.0
 uvicorn==0.30.1
 pandas==2.2.2
@@ -74,11 +68,33 @@ modulos/: Directorio con los módulos Python que implementan las funciones del s
 main.py: Archivo principal que inicializa la aplicación FastAPI y define los endpoints para interactuar con el sistema.
 requirements.txt: Archivo que lista las dependencias del proyecto.
 
-API:
-La API permite obtener recomendaciones de películas similares a una película de referencia dada.
+INSTRUCCIONES DE ACCESO A LA API:
+1. Acceso a la Documentación Interactiva
+Para acceder a la documentación interactiva de la API, puedes visitar el siguiente enlace:
+https://proyecto-individual-n-1-labs-henry.onrender.com/docs
 
-Acceso a la API
-Para acceder a la API:
+Documentación Interactiva de la API
+Esta documentación está generada por FastAPI y te permite explorar y probar los diferentes endpoints de la API directamente desde tu navegador.
+Navegación en la Documentación
+Interfaz Interactiva: Una vez que accedas al enlace, verás una interfaz interactiva que lista todos los endpoints disponibles en tu API.
+Explorar Endpoints: Puedes hacer clic en cada endpoint para ver detalles adicionales, como los parámetros que aceptan y los posibles valores de retorno.
+Probar Endpoints: La interfaz permite probar los endpoints directamente. Puedes ingresar valores en los campos de entrada y hacer clic en el botón "Try it out" para ver la respuesta de la API.
+
+Ejemplo de uso:
+
+Endpoint: peliculas_dia/{dia}
+Este endpoint devuelve la cantidad de filmaciones en un día específico.
+
+Método: GET
+dia: El nombre del dia de la semana (por ejemplo, "lunes", "jueves", etc.)
+Ejemplo de Uso
+Para obtener la cantidad de filmaciones en el mes de enero, puedes hacer una solicitud GET a la siguiente URL:
+[https://proyecto-individual-n-1-labs-henry.onrender.com/cantidad_filmaciones_mes/enero](https://proyecto-individual-n-1-labs-henry.onrender.com/docs#/default/cantidad_filmaciones_dia_peliculas_dia__dia__get)
+
+Respuesta Esperada
+{
+  "cantidad": 3503
+}
 
 
 
