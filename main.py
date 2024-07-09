@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import pandas as pd
-from modulos import cantidad_filmaciones_mes, cantidad_filmaciones_dia, score_titulo, votos_titulo, get_actor, get_director
+from modulos import cantidad_filmaciones_mes, cantidad_filmaciones_dia, score_titulo, votos_titulo, get_actor, get_director, cantidad_filmaciones_mes, recomendacion
 import os
 import uvicorn
 
@@ -44,6 +44,9 @@ app.get("/get_actor/{actor_name}")(get_actor)
 # Endpoint get_director
 app.get("/get_director/{director_name}")(get_director)
 
-
-
+#Endpoint Modelo de recomendación
+@app.get("/recomendar/{titulo}")
+def recommend_movies(titulo: str):
+    recommended_movies = recomendacion(titulo)  
+    return {"titulo": titulo, "recomendaciones": recommended_movies}
 

@@ -4,3 +4,7 @@ venv/
 #datasets originales en .csv
 datasets originales/
 
+__pycache__/
+
+
+
