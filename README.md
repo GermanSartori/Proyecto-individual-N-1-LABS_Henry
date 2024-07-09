@@ -1,4 +1,4 @@
-# DOCUMENTACIÓN PARA EL PROYECTO DE RECOMENDACIÓN Y ANÁLISIS DE PELÍCULAS
+# DOCUMENTACIÓN PARA EL PROYECTO DE RECOMENDACIÓN Y ANÁLISIS DE PELÍCULAS 🚀
 
 
 ---
@@ -18,7 +18,7 @@
 ---
 
 
-### INTRODUCCIÓN
+### 🟡 INTRODUCCIÓN
 ## "Un Viaje por el Análisis de Datos y la Recomendación Personalizada en Cine"
 
 ### El trabajo incluye:
@@ -35,55 +35,58 @@ Tecnologías utilizadas: Python, Github, FastApi, Render. Además librerías com
 ---
 
 
-### CONTEXTUALIZACIÓN:
+### 🟡 CONTEXTUALIZACIÓN:
 Este proyecto aborda la necesidad de recomendar películas de manera efectiva. El sistema considera factores como el género, el director y el actor principal para generar recomendaciones personalizadas y precisas.
 
 
 ---
 
 
-### METODOLOGÍA:
+### 🟡METODOLOGÍA:
 El sistema utiliza Vectorización TF-IDF para representar las características relevantes (género, director, actor) y Cosine Similarity para calcular la similitud entre películas.
 
 
 ---
 
 
-### ESTRUCTURA DEL PROYECTO:
-datos_procesados/: Contiene los datos preprocesados utilizados para el sistema de recomendación.  
-modulos/: Directorio con los módulos Python que implementan las funciones del sistema.  
-main.py: Archivo principal que inicializa la aplicación FastAPI y define los endpoints para interactuar con el sistema.  
-requirements.txt: Archivo que lista las dependencias del proyecto.  
+### 🟡ESTRUCTURA DEL PROYECTO:
+- datos_procesados/: Contiene los datos preprocesados utilizados para el sistema de recomendación.  
+- modulos/: Directorio con los módulos Python que implementan las funciones del sistema.  
+- main.py: Archivo principal que inicializa la aplicación FastAPI y define los endpoints para interactuar con el sistema.  
+- requirements.txt: Archivo que lista las dependencias del proyecto.  
 
 
 ---
 
 
-### CONCLUSIONES:
+### 🟡CONCLUSIONES:
 El sistema muestra una recomendación de películas similares, mejorando la experiencia del usuario al proporcionar sugerencias relevantes y personalizadas. 
-Además provee datos como votos, años de extreno, etc. para posterior análisis.
+Además provee datos como votos, años de estreno, etc. para posterior análisis.
 
 Algunos ejemplos de lo que se podrá ver en el EDA:  
 
 #### Directores:
-<p>- Hay una notable consistencia entre los directores del top 20, con la mayoría produciendo entre 35 y 50 películas.</p>
-<p>- Incluso el director en el puesto 20 tiene cerca de 40 películas, lo que indica una alta productividad entre los directores más destacados.</p>
-<p>- Todos los directores en el top 20 son hombres, lo que podría reflejar un sesgo histórico en la industria cinematográfica.
+- Hay una notable consistencia entre los directores del top 20, con la mayoría produciendo entre 35 y 50 películas.
+  
+- Incluso el director en el puesto 20 tiene cerca de 40 películas, lo que indica una alta productividad entre los directores más destacados.
+  
+- Todos los directores en el top 20 son hombres, lo que podría reflejar un sesgo histórico en la industria cinematográfica.
 
 #### Ingresos y presupuesto:
-La mayoría de las películas de la base de datos tienen ingresos bajos, con una distribución muy sesgada hacia la izquierda.  
-Las películas con mayores ingresos tienden a tener un mayor número de votos.  
-Las películas con mayor presupuesto tienden a tener mayores ingresos, un mayor número de votos y una calificación promedio más alta.  
-Los mayores presupuestos suelen generar más ingresos. La relación no es siempre garantía de éxito. La mayoría de las películas se concentran en presupuestos e ingresos bajos, con algunos outliers entre la relación de presupuesto y retornos, pero no necesariamente son errores. Estos son algunos positivos y otros negativos entre la relación de valores.  
+- La base de datos muestra que la mayoría de las películas tienen ingresos bajos, con una distribución sesgada hacia la izquierda.
+  
+- Las películas con mayores ingresos generalmente reciben más votos. Además, aquellas con presupuestos más altos suelen generar mayores ingresos y obtener una calificación promedio más alta.
+
+- Sin embargo, la relación entre presupuesto y éxito no siempre es garantía. Aunque la mayoría de las películas se concentran en presupuestos e ingresos bajos, existen algunos casos atípicos donde la relación entre presupuesto y retorno varía, reflejando diversos resultados. 
 
 #### Preferencias por género:
-Preferencia por ciertos géneros, con el drama y la comedia dominando significativamente.
+- Preferencia por ciertos géneros, con el drama y la comedia dominando significativamente.
 
 
 ---
 
 
-### EJEMPLO DE USO  
+### 🟡EJEMPLO DE USO  
 #### Instrucciones de Acceso a la API  
 ## Acceso a la Documentación  
 [# Visita este enlace](https://proyecto-individual-n-1-labs-henry.onrender.com/docs)
@@ -109,20 +112,20 @@ día: El nombre del día (por ejemplo, "lunes", "jueves", etc.)
   
 Respuesta Esperada
 
-{  
-  "cantidad": 5303  
-}  
+- {  
+-   "cantidad": 5303  
+- }  
 
 
 ---
 
 
-### FUENTES DE DATOS:
+### 🟡FUENTES DE DATOS:
 Se utilizan conjuntos de datos de películas que incluyen información detallada sobre géneros, directores, actores y métricas de éxito.
 
 ---
 
-### COLABORACIÓN:
+### 🟡COLABORACIÓN:
 ¡Tu contribución es bienvenida! Si deseas mejorar este proyecto, por favor sigue estos pasos:
 
 #### INSTRUCCIONES DE EJECUCIÓN LOCAL
@@ -155,9 +158,6 @@ python-dotenv==1.0.1
 requests==2.32.3  
 pyarrow==15.0.2  
 matplotlib==3.9.1  
-##### UBICACIÓN:
-Navega al directorio del proyecto:
-cd <dirección del proyecto>
 
 ##### Base de datos:
 Por si se quiere consultar desde la base de origen, los datasets originales (convertidos a Parquet para optimizar rendimiento y espacio) se encuentran en la carpeta "datos_procesados".  
