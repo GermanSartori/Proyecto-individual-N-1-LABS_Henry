@@ -231,13 +231,17 @@ def get_director(director_name: str):
 @app.get("/recomendar/{titulo}")
 def recomendacion(titulo: str):
     try:
-        # Verificar que movies_path es un DataFrame
-        if not isinstance(movies_path, pd.DataFrame):
-            raise TypeError("movies_path no es un DataFrame")
+        # Verificar que df_movies_limpio es un DataFrame
+        if not isinstance(df_movies_limpio, pd.DataFrame):
+            raise TypeError("df_movies_limpio no es un DataFrame")
+
+        # Verificar si el título existe en el DataFrame
+        if titulo not in df_movies_limpio['title'].values:
+            raise HTTPException(status_code=404, detail=f"No se encontró la película '{titulo}'")
 
         # Filtrado de películas por el mismo género que la película de referencia
-        genre = movies_path.loc[movies_path['title'] == titulo, 'genre'].iloc[0]
-        similar_movies = movies_path[movies_path['genre'] == genre]
+        genre = df_movies_limpio.loc[df_movies_limpio['title'] == titulo, 'genre'].iloc[0]
+        similar_movies = df_movies_limpio[df_movies_limpio['genre'] == genre]
 
         # Vectorización TF-IDF de las características relevantes (género y título)
         vectorizer = TfidfVectorizer(stop_words='english')
@@ -245,7 +249,7 @@ def recomendacion(titulo: str):
 
         # Cálculo de la similitud de coseno entre la película de referencia y todas las películas similares
         reference_index = similar_movies[similar_movies['title'] == titulo].index[0]
-        similarities = cosine_similarity(tfidf_matrix[reference_index], tfidf_matrix).flatten()
+        similarities = cosine_similarity(tfidf_matrix[reference_index:reference_index+1], tfidf_matrix).flatten()
 
         # Obtención de las películas, ordenadas por similitud (excluyendo la película de referencia)
         similar_movies_indices = similarities.argsort()[::-1][1:6]  # Excluye la primera (la misma película)
@@ -253,8 +257,16 @@ def recomendacion(titulo: str):
 
         return recommended_movies
     
-    except KeyError as e:
-        raise HTTPException(status_code=404, detail=f"No se encontraron datos clave: {str(e)}")
-    
+    except TypeError as te:
+        raise HTTPException(status_code=500, detail=str(te))
+    except IndexError:
+        raise HTTPException(status_code=404, detail=f"No se encontraron películas similares a '{titulo}'")
+    except HTTPException as he:
+        raise he
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Error interno: {str(e)}")
+    
+
+    print(f"Tipo de df_movies_limpio: {type(df_movies_limpio)}")
+print(f"Columnas en df_movies_limpio: {df_movies_limpio.columns}")
+print(f"Primeras filas de df_movies_limpio:\n{df_movies_limpio.head()}")
