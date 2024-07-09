@@ -228,15 +228,12 @@ def get_director(director_name: str):
 
 
 #================================================================================================
-# Carga de los DataFrames necesarios
-movies_df = pd.read_csv('ruta/al/archivo/movies.csv')
-
 @app.get("/recomendar/{titulo}")
 def recomendacion(titulo: str):
     try:
         # Filtrado de películas por el mismo género que la película de referencia
-        genre = movies_df.loc[movies_df['title'] == titulo, 'genre'].iloc[0]
-        similar_movies = movies_df[movies_df['genre'] == genre]
+        genre = movies_path.loc[movies_path['title'] == titulo, 'genre'].iloc[0]
+        similar_movies = movies_path[movies_path['genre'] == genre]
 
         # Vectorización TF-IDF de las características relevantes (género y título)
         vectorizer = TfidfVectorizer(stop_words='english')
