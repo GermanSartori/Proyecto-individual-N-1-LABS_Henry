@@ -267,6 +267,4 @@ def recomendacion(titulo: str):
         raise HTTPException(status_code=500, detail=f"Error interno: {str(e)}")
     
 
-    print(f"Tipo de df_movies_limpio: {type(df_movies_limpio)}")
-print(f"Columnas en df_movies_limpio: {df_movies_limpio.columns}")
-print(f"Primeras filas de df_movies_limpio:\n{df_movies_limpio.head()}")
+    
