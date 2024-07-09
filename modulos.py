@@ -231,6 +231,10 @@ def get_director(director_name: str):
 @app.get("/recomendar/{titulo}")
 def recomendacion(titulo: str):
     try:
+        # Verificar que movies_path es un DataFrame
+        if not isinstance(movies_path, pd.DataFrame):
+            raise TypeError("movies_path no es un DataFrame")
+
         # Filtrado de películas por el mismo género que la película de referencia
         genre = movies_path.loc[movies_path['title'] == titulo, 'genre'].iloc[0]
         similar_movies = movies_path[movies_path['genre'] == genre]
