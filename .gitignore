@@ -1,10 +1,6 @@
 #entorno virtual
 venv/
-
 #datasets originales en .csv
 datasets originales/
-
 __pycache__/
-
-
-
+modelo_recomendacion.ipynb
