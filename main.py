@@ -24,6 +24,11 @@ movies_path = os.path.join(current_dir, "datos_procesados", "movies_df.csv")
 director_actor_path = os.path.join(current_dir, "datos_procesados", "director_actor_df.csv")
 
 
+#================================
+# Carga los DataFrames aquí
+df_movies_limpio = pd.read_csv(movies_path)
+director_actor_df = pd.read_csv(director_actor_path)
+#================================
 
 
 # Endpoint cantidad_filmaciones_mes
