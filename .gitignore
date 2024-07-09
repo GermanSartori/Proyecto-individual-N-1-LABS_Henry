@@ -2,5 +2,5 @@
 venv/
 #datasets originales en .csv
 datasets originales/
+#no push de cache
 __pycache__/
-modelo_recomendacion.ipynb
