@@ -1,6 +1,6 @@
 # DOCUMENTACIÓN PARA EL PROYECTO DE RECOMENDACIÓN Y ANÁLISIS DE PELÍCULAS 🚀
 
-
+![ ](https://github.com/GermanSartori/Proyecto-individual-N-1---LABS---Henry/blob/main/im%C3%A1genes/2.png)
 ---
 
 
@@ -55,11 +55,17 @@ El sistema utiliza Vectorización TF-IDF para representar las características r
 - main.py: Archivo principal que inicializa la aplicación FastAPI y define los endpoints para interactuar con el sistema.  
 - requirements.txt: Archivo que lista las dependencias del proyecto.  
 
+![ ](https://github.com/GermanSartori/Proyecto-individual-N-1---LABS---Henry/blob/main/im%C3%A1genes/arbol.png)
+
 
 ---
 
 
-### 🟡CONCLUSIONES:
+### 🟡CONCLUSIONES:  
+
+<img src="https://github.com/GermanSartori/Proyecto-individual-N-1---LABS---Henry/raw/main/im%C3%A1genes/graficos.png" alt="Gráfico" width="400"/>
+
+
 El sistema muestra una recomendación de películas similares, mejorando la experiencia del usuario al proporcionar sugerencias relevantes y personalizadas. 
 Además provee datos como votos, años de estreno, etc. para posterior análisis.
 
@@ -91,8 +97,6 @@ Algunos ejemplos de lo que se podrá ver en el EDA:
 ## Acceso a la Documentación  
 [# Visita este enlace](https://proyecto-individual-n-1-labs-henry.onrender.com/docs)
 
-
-
 ##### Documentación Interactiva de la API
 Esta documentación está generada por FastAPI y te permite explorar y probar los diferentes endpoints.
 
@@ -104,9 +108,13 @@ Probar Endpoints: La interfaz permite probar los endpoints directamente. Puedes 
 Aquí tienes un ejemplo de cómo usar uno de los endpoints disponibles en tu API:  
 Método: GET
 Endpoint: peliculas_dia/{dia}  
-Este endpoint devuelve la cantidad de filmaciones en un día específico.
-URL: [Visita la documentación de la API](https://proyecto-individual-n-1-labs-henry.onrender.com/docs#/default/cantidad_filmaciones_dia_peliculas_dia__dia__get)
- 
+Este endpoint devuelve la cantidad de filmaciones en un día específico. 
+
+
+   
+![ ](https://github.com/GermanSartori/Proyecto-individual-N-1---LABS---Henry/blob/main/im%C3%A1genes/api%20dia.png)  
+URL: [Visita la documentación de la API](https://proyecto-individual-n-1-labs-henry.onrender.com/docs#/default/cantidad_filmaciones_dia_peliculas_dia__dia__get)  
+
 Parámetro:
 día: El nombre del día (por ejemplo, "lunes", "jueves", etc.)  
   
@@ -126,6 +134,7 @@ Se utilizan conjuntos de datos de películas que incluyen información detallada
 ---
 
 ### 🟡COLABORACIÓN:
+🤝
 ¡Tu contribución es bienvenida! Si deseas mejorar este proyecto, por favor sigue estos pasos:
 
 #### INSTRUCCIONES DE EJECUCIÓN LOCAL
